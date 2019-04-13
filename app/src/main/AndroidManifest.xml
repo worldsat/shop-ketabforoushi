@@ -33,13 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".Activity.DonePeymentActivity"> <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-            <category android:name="ir.shop1.shop1" />
-        </intent-filter></activity>
-        <activity android:name=".Activity.getway">
+        <activity android:name=".Activity.DonePeymentActivity">
             <intent-filter>
 
 
@@ -49,10 +43,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="www.danesh-book.ir"
 
                     android:scheme="danesh" />
             </intent-filter>
+    </activity>
+        <activity android:name=".Activity.getway">
+
         </activity>
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.BasketActivity" />

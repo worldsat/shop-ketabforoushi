@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,16 +20,29 @@ public class DonePeymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done_peyment);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        TextView MessageTxt = findViewById(R.id.message2);
+        TextView MessageTxt = findViewById(R.id.message);
         Intent in = getIntent();
         Uri data = in.getData();
         if (data != null) {
 
-            String rdata = data.toString().replace("https://", "");
+            String rdata = data.toString().replace("danesh://", "");
 
             MessageTxt.setText(Message(rdata));
 
         }
+
+        ImageView profile = findViewById(R.id.profile);
+        profile.setVisibility(View.GONE);
+        RelativeLayout BasketLayout = findViewById(R.id.BasketLayout);
+        BasketLayout.setVisibility(View.GONE);
+        LinearLayout backIcon = findViewById(R.id.backButton);
+        backIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(DonePeymentActivity.this, MainActivity.class));
+            }
+        });
     }
 
 
