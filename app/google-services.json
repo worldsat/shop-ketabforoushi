@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "981576714983",
+    "firebase_url": "https://daneshbook-84a43.firebaseio.com",
+    "project_id": "daneshbook-84a43",
+    "storage_bucket": "daneshbook-84a43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981576714983:android:20b8c634c82f547c",
+        "android_client_info": {
+          "package_name": "ir.shop1.shop1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981576714983-3a05a968i98olkeu7eu5ktl00tdsmpvv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.shop1.shop1",
+            "certificate_hash": "577a02c1e2f4f241d35d1afc910e0afdb8308a3e"
+          }
+        },
+        {
+          "client_id": "981576714983-8vjvcq8cljs8v765nln4sfus9qpcacmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGoVTNBSWnfasoRROSKWrS2uzNHrZSjw4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981576714983-8vjvcq8cljs8v765nln4sfus9qpcacmh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_main_menu"
+        android:title="صفحه اصلی"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@mipmap/home">
+    </item>
+    <item
+        android:id="@+id/action_category"
+        android:title="دسته بندی"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@mipmap/category">
+    </item>
+    <item
+        android:id="@+id/action_search"
+        android:title="جستجو"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@mipmap/saerch">
+    </item>
+
+    <item
+        android:id="@+id/action_buy_list"
+        android:title="لیست سفارشات"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@mipmap/list">
+    </item>
+    <item
+        android:id="@+id/action_basket"
+        android:title="سبد خرید"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@mipmap/card2">
+    </item>
+</menu>
