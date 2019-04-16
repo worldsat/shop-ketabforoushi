@@ -71,9 +71,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/iransans"
+                    android:fontFamily="@font/iransansbold"
                     android:text="TextView"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/green_dark" />
             </LinearLayout>
 
 

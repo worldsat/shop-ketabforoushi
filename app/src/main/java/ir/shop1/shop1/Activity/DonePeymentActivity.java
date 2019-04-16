@@ -45,49 +45,57 @@ public class DonePeymentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     private String Message(String str) {
         String str2 = "";
 
         switch (str) {
-            case "-1": {
+            case "OK": {
+                str2 = "از خرید شما متشکریم";
+                break;
+            }
+            case "Canceled By User": {
                 str2 = "تراکنش توسط خریدار کنسل شده است";
                 break;
             }
-            case "79": {
+            case "Invalid Amount": {
                 str2 = "مبلغ سند برگشتی، از مبلغ تراکنش اصلی بیشتر است";
                 break;
             }
-            case "14": {
+            case "Invalid Cart Number": {
                 str2 = "شماره کارت نامعتبر است";
                 break;
             }
 
-            case "12": {
+            case "No Such Issuer": {
                 str2 = "چنین صادر کننده کارتی وجود ندارد";
                 break;
             }
-            case "33": {
+            case "Expire Card Pick Up": {
                 str2 = "از تاریخ انقاضی کارت گذشته است و کارت دیگر معتبر نیست";
                 break;
             }
-            case "38": {
+            case "Allowable PIN Tries Exceeded Pick Up": {
                 str2 = "رمز کارت 3 مرتبه اشتباه وارد شده است در نتیجه کارت غیر فعال خواهد شد";
                 break;
             }
-            case "55": {
+            case "Incorrect PIN": {
                 str2 = "خریدار رمز کارت را اشتباه وارد کرده است";
                 break;
             }
-            case "61": {
+            case "Exceeds Withdrawal Amount Limit": {
                 str2 = " مبلغ بیش از سقف برداشت می باشد";
                 break;
             }
-            case "51": {
+            case "No Sufficient Funds": {
                 str2 = "موجودی حساب خریدار کافی نیست";
                 break;
             }
-            case "84": {
+            case "Issuer Down Slm": {
                 str2 = "سیستم بانک صادر کننده کارت خریدار، در وضعیت عملیاتی نمی باشد";
                 break;
             }
