@@ -75,6 +75,7 @@ public class ItemActivity extends AppCompatActivity implements ObservableScrollV
         chap = findViewById(R.id.chap);
         isbn = findViewById(R.id.isbn);
         virayesh = findViewById(R.id.virayesh);
+        price_title = findViewById(R.id.price_title);
 
 
         Toolbar();

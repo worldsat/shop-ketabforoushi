@@ -85,11 +85,17 @@ public class setBasket {
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<>();
                 final SharedPreferences sp = context.getSharedPreferences("Token", 0);
+                SharedPreferences Bill = context.getSharedPreferences("Bill", 0);
 
                 MyData.put("PostalCode", postalCode);
                 MyData.put("PhoneNumber", PhoneNumber);
                 MyData.put("Mobile", mobile);
                 MyData.put("Address", address);
+                MyData.put("City_id", Bill.getString("shahr", "1"));
+
+                MyData.put("Discount_Amount", Bill.getString("takhfif", "0"));
+                MyData.put("TransportationFee", Bill.getString("postalFee", "0"));
+                MyData.put("Total", Bill.getString("PriceItem", "0"));
                 MyData.put("Api_token", sp.getString("token", "nothing"));
 
                 return MyData;

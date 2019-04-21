@@ -4,6 +4,7 @@ package ir.shop1.shop1.Fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ import ir.shop1.shop1.Activity.MainActivity;
 import ir.shop1.shop1.Engine.SetterGetterBill;
 import ir.shop1.shop1.R;
 import ir.shop1.shop1.Volley.getBasket;
+import ir.shop1.shop1.Volley.getTakhfifCode;
 import ir.shop1.shop1.Volley.getToken;
 import ir.shop1.shop1.Volley.setFinalizeBasket;
 
@@ -41,12 +44,13 @@ public class BasketFragment extends Fragment {
 
     }
 
-    private TextView totalPriceImpure;
+    private TextView totalPriceImpure, takhfifTxt;
     private TextView totalPricePure;
     private MaterialDialog Rating_dialog;
     private String str;
-    private Button nextBasket;
+    private Button nextBasket, takhfifBtn;
     private DecimalFormat formatter = new DecimalFormat("###,###,###,###");
+    private EditText takhfifEdt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,9 @@ public class BasketFragment extends Fragment {
         nextBasket = getView().findViewById(R.id.nextBasket);
         totalPriceImpure = getView().findViewById(R.id.totalImpure);
         totalPricePure = getView().findViewById(R.id.totalPure);
+        takhfifTxt = getView().findViewById(R.id.takhfifTxt);
+        takhfifEdt = getView().findViewById(R.id.takhfifEdt);
+        takhfifBtn = getView().findViewById(R.id.codeBtn);
 
         ConstraintLayout BasketLayout = getView().findViewById(R.id.Basket_layout);
         ConstraintLayout BillLayout = getView().findViewById(R.id.Bill_Layout);
@@ -132,6 +139,15 @@ public class BasketFragment extends Fragment {
             }
         });
 
+
+        takhfifBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getTakhfifCode getTakhfifCode = new getTakhfifCode();
+                getTakhfifCode.get_takhfif(getActivity(), takhfifEdt.getText().toString());
+            }
+        });
+
     }
 
     public void setPriceBill(Context context) {
@@ -145,15 +161,20 @@ public class BasketFragment extends Fragment {
         } catch (Exception e) {
 
         }
+        takhfifTxt = ((Activity) context).findViewById(R.id.takhfifTxt);
+        SharedPreferences Bill = context.getSharedPreferences("Bill", 0);
+        takhfifTxt.setText(Bill.getString("takhfif", "0") + " تومان ");
     }
 
     public void setHiddenLayout(Context context) {
         ConstraintLayout BasketLayout = ((Activity) context).findViewById(R.id.Basket_layout);
         ConstraintLayout BillLayout = ((Activity) context).findViewById(R.id.Bill_Layout);
+        ConstraintLayout BillLayout2 = ((Activity) context).findViewById(R.id.Bill_Layout2);
         Button nextBasket = ((Activity) context).findViewById(R.id.nextBasket);
         try {
             BasketLayout.setVisibility(View.GONE);
             BillLayout.setVisibility(View.GONE);
+            BillLayout2.setVisibility(View.GONE);
             nextBasket.setVisibility(View.GONE);
         } catch (Exception e) {
             Log.i("mohsenjamali", "setHiddenLayoutError: " + e);
@@ -163,10 +184,12 @@ public class BasketFragment extends Fragment {
     public void setShowLayout(Context context) {
         ConstraintLayout BasketLayout = ((Activity) context).findViewById(R.id.Basket_layout);
         ConstraintLayout BillLayout = ((Activity) context).findViewById(R.id.Bill_Layout);
+        ConstraintLayout BillLayout2 = ((Activity) context).findViewById(R.id.Bill_Layout2);
         Button nextBasket = ((Activity) context).findViewById(R.id.nextBasket);
         try {
             BasketLayout.setVisibility(View.VISIBLE);
             BillLayout.setVisibility(View.VISIBLE);
+            BillLayout2.setVisibility(View.VISIBLE);
             nextBasket.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.i("mohsenjamali", "setShowLayoutError: " + e);

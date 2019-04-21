@@ -6,18 +6,26 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
 import ir.shop1.shop1.R;
+import ir.shop1.shop1.Volley.getShahrPrice;
 import ir.shop1.shop1.Volley.getToken;
 import ir.shop1.shop1.Volley.setBasket;
 
@@ -29,6 +37,9 @@ public class BasketMiddleActivity extends AppCompatActivity {
     private TextView addressTxt;
     private ProgressBar progressBar;
     private String RadioPostSelected = "2", RadioPaymentSelected = "1";
+    private Spinner maghsad;
+    private TextView ostanTxt, ShahrTxt;
+    private TextView postNahaie, feeNahaie,FeeAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,7 @@ public class BasketMiddleActivity extends AppCompatActivity {
         Toolbar();
         Basket();
         setText();
+        spinner();
         final TextView nextBasketBtn = findViewById(R.id.nextBasketBtn);
         nextBasketBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +63,10 @@ public class BasketMiddleActivity extends AppCompatActivity {
                     nameEdt.setError(getString(R.string.error_name_short));
                 } else if (nameEdt.getText().toString().isEmpty()) {
                     nameEdt.setError(getString(R.string.error_name));
-                } else if (ostanEdt.getText().toString().isEmpty()) {
-                    ostanEdt.setError(getString(R.string.error_ostan));
-                } else if (shahrEdt.getText().toString().isEmpty()) {
-                    shahrEdt.setError(getString(R.string.error_shahr));
+//                } else if (ostanEdt.getText().toString().isEmpty()) {
+//                    ostanEdt.setError(getString(R.string.error_ostan));
+//                } else if (shahrEdt.getText().toString().isEmpty()) {
+//                    shahrEdt.setError(getString(R.string.error_shahr));
                 } else if (tellEdt.getText().toString().length() < 8) {
                     tellEdt.setError(getString(R.string.error_tell));
                 } else if (postalEdt.getText().toString().length() < 10) {
@@ -84,7 +96,7 @@ public class BasketMiddleActivity extends AppCompatActivity {
 
                     setBasket setBasket = new setBasket();
                     String addressFull = ostanEdt.getText().toString() + " " + shahrEdt.getText().toString() + " " + addressEdt.getText().toString();
-                    setBasket.register(BasketMiddleActivity.this, dialog,postalEdt.getText().toString(), addressFull, tellEdt.getText().toString(), mobileEdt.getText().toString());
+                    setBasket.register(BasketMiddleActivity.this, dialog, postalEdt.getText().toString(), addressFull, tellEdt.getText().toString(), mobileEdt.getText().toString());
 
                 }
 
@@ -106,6 +118,13 @@ public class BasketMiddleActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         nameEdt.requestFocus();
         mobileEdt = findViewById(R.id.mobileEdt);
+        maghsad = findViewById(R.id.maghsad);
+        ShahrTxt = findViewById(R.id.txtGheymat23);
+        ostanTxt = findViewById(R.id.textView28);
+        postNahaie = findViewById(R.id.postNahaye);
+        feeNahaie = findViewById(R.id.feeNahaye);
+        FeeAll = findViewById(R.id.FeeAll);
+
     }
 
     private void Toolbar() {
@@ -185,6 +204,54 @@ public class BasketMiddleActivity extends AppCompatActivity {
         shahrEdt.setText(sp.getString("Shahr", ""));
         mobileEdt.setText(sp.getString("mobile", ""));
         postalEdt.setText(sp.getString("postal", ""));
+    }
+
+    private void spinner() {
+
+        List<String> categories = new ArrayList<>();
+        categories.add("اصفهان");
+        categories.add("نجف آباد");
+        categories.add("شهر های دیگر");
+
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, categories);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+//        ProgressDialog dialog = new ProgressDialog(BasketMiddleActivity.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog = ProgressDialog.show(BasketMiddleActivity.this, "", "لطفا منتظر بمانید...", true);
+
+        maghsad.setAdapter(dataAdapter);
+        maghsad.setSelection(0);
+        maghsad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                              @Override
+                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                  String spinner_value = maghsad.getItemAtPosition(position).toString();
+                                                  getShahrPrice getShahrPrice = new getShahrPrice();
+                                                  getShahrPrice.get_price(BasketMiddleActivity.this, String.valueOf(position + 1), postNahaie,feeNahaie,FeeAll);
+//                                                  if (position == 2) {
+//                                                      ostanTxt.setVisibility(View.VISIBLE);
+//                                                      ShahrTxt.setVisibility(View.VISIBLE);
+//                                                      ostanEdt.setVisibility(View.VISIBLE);
+//                                                      shahrEdt.setVisibility(View.VISIBLE);
+//                                                  } else {
+                                                      ostanEdt.setVisibility(View.GONE);
+                                                      shahrEdt.setVisibility(View.GONE);
+                                                      ostanTxt.setVisibility(View.GONE);
+                                                      ShahrTxt.setVisibility(View.GONE);
+//                                                  }
+                                                  SharedPreferences Bill = getApplicationContext().getSharedPreferences("Bill", 0);
+                                                  Bill.edit().putString("shahr", String.valueOf(position + 1)).apply();
+                                                  Log.i("moh3n", "onItemClick: " + spinner_value);
+                                              }
+
+                                              @Override
+                                              public void onNothingSelected(AdapterView<?> parent) {
+
+                                              }
+                                          }
+        );
+
     }
 //    private void send_radio() {
 //

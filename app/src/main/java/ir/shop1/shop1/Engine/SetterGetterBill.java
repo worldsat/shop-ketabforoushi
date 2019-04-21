@@ -20,6 +20,14 @@ public class SetterGetterBill {
         Bill = context.getSharedPreferences("Bill", 0);
         PriceItem = Bill.getString("totalItem", "0");
 
+        String Takhfif = Bill.getString("takhfif", "0");
+
+        int price = Integer.valueOf(PriceItem);
+        int takhfif = Integer.valueOf(Takhfif);
+        int total = price - takhfif;
+        PriceItem = String.valueOf(total);
+
+        Bill.edit().putString("PriceItem", PriceItem).apply();
         return PriceItem;
     }
 
@@ -37,7 +45,7 @@ public class SetterGetterBill {
         } else if (Kind.equals("minus")) {
             int TotalpricePure = n - totalPriceItemImpure;
             Bill.edit().putString("totalItem", IntToString(TotalpricePure)).apply();
-            Log.i("mohsenjamali", "setPriceItem: "+n+" "+StringToInt(numberOrderItem)+" "+TotalpricePure);
+            Log.i("mohsenjamali", "setPriceItem: " + n + " " + StringToInt(numberOrderItem) + " " + TotalpricePure);
         }
     }
 

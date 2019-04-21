@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ir.shop1.shop1.Activity.InternetActivity;
+import ir.shop1.shop1.Engine.SnakBar;
 import ir.shop1.shop1.R;
 
 public class getToken {
@@ -36,17 +37,27 @@ public class getToken {
                     public void onResponse(String response) {
 
                         try {
-                            Log.i("mohsenjamali", "onResponse: "+response);
-                            JSONObject jsonRootObject = new JSONObject(response);
+                            Log.i("moh3n", "onResponse: "+response);
+                            if (response.equals("{\"Message\":0}")) {
+                                JSONObject jsonRootObject = new JSONObject(response);
 
-                           // Log.i("mohsenjamali", "arrayLenght: " + jsonRootObject.getString("Api_Token"));
-                            SharedPreferences sp = context.getSharedPreferences("Token", 0);
-                            SharedPreferences.Editor edit = sp.edit();
-                            edit.putString("token", jsonRootObject.getString("Api_Token"));
-                            edit.apply();
+                                // Log.i("mohsenjamali", "arrayLenght: " + jsonRootObject.getString("Api_Token"));
+                                SharedPreferences sp = context.getSharedPreferences("Token", 0);
+                                SharedPreferences.Editor edit = sp.edit();
+                                edit.putString("token", jsonRootObject.getString("Api_Token"));
+                                edit.apply();
 
-                            getProfile getProfile=new getProfile();
-                            getProfile.show_profile(context);
+                                getProfile getProfile=new getProfile();
+                                getProfile.show_profile(context);
+                            }else    if (response.equals("{\"Message\":2}")) {
+                                SnakBar snakBar=new SnakBar();
+                                snakBar.snakShow(context,"رمز عبور و یا نام کاربری اشتباه است");
+
+                            }else   if (response.equals("{\"Message\":4}")) {
+                                SnakBar snakBar=new SnakBar();
+                                snakBar.snakShow(context,"حساب کاربری شما فعال نشده است");
+                            }
+
 
 
                         } catch (Exception e) {
