@@ -23,17 +23,19 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-import ir.shop1.shop1.Activity.BasketActivity;
 import ir.shop1.shop1.Activity.BasketMiddleActivity;
+import ir.shop1.shop1.Activity.ItemActivity;
 import ir.shop1.shop1.Activity.LoginActivity;
-import ir.shop1.shop1.Activity.MainActivity;
+import ir.shop1.shop1.AlertDialog.LoginSignupAlert;
+import ir.shop1.shop1.Engine.ManagementBasket;
 import ir.shop1.shop1.Engine.SetterGetterBill;
 import ir.shop1.shop1.R;
-import ir.shop1.shop1.Volley.getBasket;
+import ir.shop1.shop1.Volley.getBasket2;
 import ir.shop1.shop1.Volley.getTakhfifCode;
 import ir.shop1.shop1.Volley.getToken;
-import ir.shop1.shop1.Volley.setFinalizeBasket;
+import ir.shop1.shop1.Volley.setBasket2;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,17 +98,33 @@ public class BasketFragment extends Fragment {
             }
         });
 
-        //end Check Login
-        getToken token = new getToken();
+        // Check Login
+//        getToken token = new getToken();
+//
+//        if (token.Ok(getActivity())) {
+//            getBasket getBasket = new getBasket();
+//            getBasket.get_Items(getActivity(), progressBar, recyclerViewlist, emptyText, BasketLayout, BillLayout, totalPriceImpure, totalPricePure);
 
-        if (token.Ok(getActivity())) {
-            getBasket getBasket = new getBasket();
-            getBasket.get_Items(getActivity(), progressBar, recyclerViewlist, emptyText, BasketLayout, BillLayout, totalPriceImpure, totalPricePure);
+        ManagementBasket managementBasket = new ManagementBasket(getActivity());
 
-        } else {
+
+//
+//        } else {
+//            setHiddenLayout(getActivity());
+//            emptyText.setVisibility(View.VISIBLE);
+//            loginBasketBtn.setVisibility(View.VISIBLE);
+//
+//        }
+
+        ArrayList<String> idProducts = managementBasket.getProducts();
+        if (idProducts.size() == 0) {
             setHiddenLayout(getActivity());
             emptyText.setVisibility(View.VISIBLE);
-            loginBasketBtn.setVisibility(View.VISIBLE);
+
+        } else {
+
+            getBasket2 getBasket2 = new getBasket2();
+            getBasket2.get_Items(getActivity(), managementBasket.getProducts(), progressBar, recyclerViewlist, emptyText, BasketLayout, BillLayout, totalPriceImpure, totalPricePure);
 
         }
         //end check Login
@@ -127,11 +145,19 @@ public class BasketFragment extends Fragment {
 //
 //                SetterGetterNumberOrder setterGetterNumberOrder = new SetterGetterNumberOrder(getActivity());
 //                setterGetterNumberOrder.emptyNumberOrder();
+                getToken token = new getToken();
+                LoginSignupAlert loginAlert = new LoginSignupAlert();
 
+                if (token.Ok(getActivity())) {
+                    Intent intent = new Intent(getActivity(), BasketMiddleActivity.class);
+                    intent.putExtra("NameActivity", "BasketFragment");
+                    getActivity().startActivity(intent);
 
-                Intent intent = new Intent(getActivity(), BasketMiddleActivity.class);
-                intent.putExtra("NameActivity", "BasketFragment");
-                getActivity().startActivity(intent);
+                    setBasket2 setBasket2 = new setBasket2();
+                    setBasket2.register(getActivity());
+                } else {
+                    loginAlert.alertShow(getActivity(), ItemActivity.class);
+                }
 
 
                 // LoginSignupAlert loginSignupAlert = new LoginSignupAlert();
@@ -163,7 +189,9 @@ public class BasketFragment extends Fragment {
         }
         takhfifTxt = ((Activity) context).findViewById(R.id.takhfifTxt);
         SharedPreferences Bill = context.getSharedPreferences("Bill", 0);
-        takhfifTxt.setText(Bill.getString("takhfif", "0") + " تومان ");
+        if (Bill != null) {
+            takhfifTxt.setText(Bill.getString("takhfif", "0") + " تومان ");
+        }
     }
 
     public void setHiddenLayout(Context context) {

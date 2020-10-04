@@ -226,10 +226,10 @@ public class NavigationDrawerFragment extends Fragment {
         } else {
             BadgeCounter.setVisibility(View.GONE);
         }
-        getToken token = new getToken();
-        if (!token.Ok(((Activity) context))) {
-            BadgeCounter.setVisibility(View.GONE);
-        }
+//        getToken token = new getToken();
+//        if (!token.Ok(((Activity) context))) {
+//            BadgeCounter.setVisibility(View.GONE);
+//        }
 
 
     }

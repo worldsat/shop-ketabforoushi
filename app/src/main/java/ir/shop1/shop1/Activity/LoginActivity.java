@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,23 +33,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login() {
-        final EditText user = findViewById(R.id.passEdt);
-        final EditText password = findViewById(R.id.addressEdt);
+        final EditText user = findViewById(R.id.addressEdt);
+//        final EditText password = findViewById(R.id.addressEdt);
         Button login = findViewById(R.id.signinBtn);
+      final ProgressBar progressBar=findViewById(R.id.progressBarPLus3);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user.getText().toString().isEmpty()) {
-                    user.setError(getString(R.string.error_email));
-                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(user.getText().toString()).matches()) {
-                    user.setError(getString(R.string.error_email));
-                } else if (password.getText().toString().isEmpty()) {
-                    password.setError(getString(R.string.error_password));
-                } else {
+//                if (user.getText().toString().isEmpty()) {
+//                    user.setError(getString(R.string.error_email));
+//                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(user.getText().toString()).matches()) {
+//                    user.setError(getString(R.string.error_email));
+//                } else if (password.getText().toString().isEmpty()) {
+//                    password.setError(getString(R.string.error_password));
+//                } else {
                     getToken getToken = new getToken();
-                    getToken.connect(LoginActivity.this, user.getText().toString(), password.getText().toString());
-                }
+                    getToken.connect(LoginActivity.this, user.getText().toString(), "",progressBar);
+//                }
             }
         });
     }

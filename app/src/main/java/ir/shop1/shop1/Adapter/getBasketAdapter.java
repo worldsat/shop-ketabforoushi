@@ -17,10 +17,14 @@ import com.bumptech.glide.request.RequestOptions;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import ir.shop1.shop1.Activity.MainActivity;
+import ir.shop1.shop1.Engine.ManagementBasket;
+import ir.shop1.shop1.Engine.SetterGetterBill;
+import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
+import ir.shop1.shop1.Engine.SnakBar;
+import ir.shop1.shop1.Fragment.BasketFragment;
 import ir.shop1.shop1.OnLoadMoreListener;
 import ir.shop1.shop1.R;
-import ir.shop1.shop1.Volley.ChangeQuantityItemBasket;
-import ir.shop1.shop1.Volley.DeleteItemBasket;
 
 
 public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -104,6 +108,9 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
+
+            ManagementBasket managementBasket = new ManagementBasket(context);
+            QuantityItems = managementBasket.getCount();
             // glide
             RequestOptions requestOptions = new RequestOptions();
             requestOptions = requestOptions
@@ -120,7 +127,6 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             myViewHolder.Title.setText(changeNumber(TitleItems.get(position)));
             String str1 = changeNumber(formatter.format(Long.valueOf(FeeItems.get(position)) * Long.valueOf(QuantityItems.get(position))) + context.getString(R.string.currency));
             myViewHolder.fee.setText(str1);
-
             String str2 = QuantityItems.get(position) + " x " + changeNumber(formatter.format(Long.valueOf(FeeItems.get(position))));
             myViewHolder.number_sefaresh.setText(str2);
             myViewHolder.number_order.setText(QuantityItems.get(position));
@@ -134,10 +140,13 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String Qty_new = String.valueOf(Integer.valueOf(myViewHolder.number_order.getText().toString()) + 1);
 
                     if (Integer.valueOf(Qty_new) < 99) {
-                        ChangeQuantityItemBasket changeQty = new ChangeQuantityItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
-                        changeQty.ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, true, myViewHolder.getAdapterPosition(), emptyText);
-
-
+//                        ChangeQuantityItemBasket changeQty = new ChangeQuantityItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
+//                        changeQty.ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, true, myViewHolder.getAdapterPosition(), emptyText);
+                        QuantityItems.add(position, Qty_new);
+                        ManagementBasket managementBasket = new ManagementBasket(context);
+                        managementBasket.updateProduct(ID, Qty_new);
+                        notifyDataSetChanged();
+                        ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, true, myViewHolder.getAdapterPosition(), emptyText);
 
                     }
                 }
@@ -153,9 +162,14 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String Qty_new = String.valueOf(Integer.valueOf(myViewHolder.number_order.getText().toString()) - 1);
                     if (Integer.valueOf(Qty_new) > 0) {
                         //calculate NumberOrder
-                        ChangeQuantityItemBasket changeQty = new ChangeQuantityItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
-                        changeQty.ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, true, myViewHolder.getAdapterPosition(), emptyText);
 
+//                        ChangeQuantityItemBasket changeQty = new ChangeQuantityItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
+//                        changeQty.ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, true, myViewHolder.getAdapterPosition(), emptyText);
+                        QuantityItems.add(position, Qty_new);
+                        ManagementBasket managementBasket = new ManagementBasket(context);
+                        managementBasket.updateProduct(ID, Qty_new);
+                        notifyDataSetChanged();
+                        ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty_new, false, myViewHolder.getAdapterPosition(), emptyText);
 
                     }
                 }
@@ -174,10 +188,22 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String Qty = myViewHolder.number_order.getText().toString();
 
                     //deleteItem with contructor
-                    DeleteItemBasket DeleteItem = new DeleteItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
-                    DeleteItem.DeleteItem(context, FeeItems.get(position), myViewHolder.ProgressBarDelete, ID, myViewHolder.delete, Qty, myViewHolder.getAdapterPosition(), emptyText);
+//                    DeleteItemBasket DeleteItem = new DeleteItemBasket(context, IdItems, TitleItems, FeeItems, QuantityItems, ImageItems, emptyText, mRecyclerViewlist);
+//                    DeleteItem.DeleteItem(context, FeeItems.get(position), myViewHolder.ProgressBarDelete, ID, myViewHolder.delete, Qty, myViewHolder.getAdapterPosition(), emptyText);
+                    QuantityItems.remove(position);
 
-                    remove(myViewHolder.getAdapterPosition());
+                    ManagementBasket managementBasket = new ManagementBasket(context);
+                    managementBasket.deleteProduct(ID);
+
+                    ChangeItem(context, myViewHolder.ProgressBarQuantity, myViewHolder.plus_btn, myViewHolder.minus_btn, ID, myViewHolder.number_order, myViewHolder.number_sefaresh, myViewHolder.fee, FeeItems.get(position), Qty, false, myViewHolder.getAdapterPosition(), emptyText);
+
+//                    notifyDataSetChanged();
+                    remove(position);
+                    if (IdItems.size() == 0) {
+                        BasketFragment basketFragment = new BasketFragment();
+                        basketFragment.setHiddenLayout(context);
+                        emptyText.setVisibility(View.VISIBLE);
+                    }
                 }
             });
 
@@ -285,14 +311,73 @@ public class getBasketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         TitleItems.remove(position);
         IdItems.remove(position);
-        QuantityItems.remove(position);
+//        QuantityItems.remove(position);
         FeeItems.remove(position);
         ImageItems.remove(position);
-
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, TitleItems.size());
+        notifyDataSetChanged();
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, TitleItems.size());
         Log.i("mohsenjamali", "remove: " + position);
     }
 
+    public void ChangeItem(final Context context, final ProgressBar ProgressBar, final ImageView plusBtn, final ImageView minusBtn, final String Product_Id, final TextView BadgeNumberItem, final TextView NumberOrderItem, final TextView PriceItem, final String PriceEachItem, final String Qty, final boolean plus, final int AdapterPosition, final TextView emptyText) {
+
+        plusBtn.setEnabled(false);
+        minusBtn.setEnabled(false);
+
+
+
+        final DecimalFormat formatter = new DecimalFormat("###,###,###,###");
+
+
+        SetterGetterNumberOrder setterGetter = new SetterGetterNumberOrder(context);
+        SnakBar snackItem = new SnakBar();
+
+
+        //tashkhis plus ya minus baraye BadgeNumber
+        if (plus) {
+            setterGetter.setNumberOrder("1", "+");
+            //calculate Price
+            SetterGetterBill SetterGetterBill = new SetterGetterBill();
+            SetterGetterBill.setPriceItem(context, PriceEachItem, "1", "plus");
+
+        } else {
+            setterGetter.setNumberOrder("1", "-");
+            //calculate Price
+            SetterGetterBill SetterGetterBill = new SetterGetterBill();
+            SetterGetterBill.setPriceItem(context, PriceEachItem, "1", "minus");
+        }
+        BadgeNumberItem.setText(Qty);
+
+        //update BadgeNumber
+        MainActivity m = new MainActivity();
+        m.setBadgeCounter(context);
+
+        //update Price Bill Impure & Pure
+        BasketFragment Basket = new BasketFragment();
+        Basket.setPriceBill(context);
+
+
+        //show empty text
+        if (setterGetter.getNumberOrder().equals("0")) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
+
+
+        //update numberOrderItem && PriceItem
+        String str1 = formatter.format(Long.valueOf(PriceEachItem) * Long.valueOf(Qty)) + context.getString(R.string.currency);
+        PriceItem.setText(str1);
+
+        String str2 = Qty + " x " + (formatter.format(Long.valueOf(PriceEachItem)));
+        NumberOrderItem.setText(str2);
+
+
+        // Log.i("mohsenjamali", "onResponseSetter: " + setterGetter.getNumberOrder());
+        plusBtn.setEnabled(true);
+        minusBtn.setEnabled(true);
+
+    }
 
 }

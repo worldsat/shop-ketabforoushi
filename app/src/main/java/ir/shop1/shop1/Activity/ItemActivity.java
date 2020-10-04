@@ -34,6 +34,7 @@ import com.nineoldandroids.view.ViewHelper;
 import java.text.DecimalFormat;
 
 import ir.shop1.shop1.AlertDialog.LoginSignupAlert;
+import ir.shop1.shop1.Engine.ManagementBasket;
 import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
 import ir.shop1.shop1.Engine.SnakBar;
 import ir.shop1.shop1.R;
@@ -42,7 +43,7 @@ import ir.shop1.shop1.Volley.getToken;
 import ir.shop1.shop1.Volley.setCommentVotes;
 
 public class ItemActivity extends AppCompatActivity implements ObservableScrollViewCallbacks {
-    private TextView Title, Discount, Fee, Description, price_title,entesharat,nevisande,salechap,virayesh,chap,isbn;
+    private TextView Title, Discount, Fee, Description, price_title, entesharat, nevisande, salechap, virayesh, chap, isbn;
     private Bundle address;
     private Button plus;
     private Toolbar my_toolbar;
@@ -89,44 +90,44 @@ public class ItemActivity extends AppCompatActivity implements ObservableScrollV
 
         Log.i("mohsenjamali", "id: " + address.getString("Id_item"));
         specialLayout.setVisibility(View.GONE);
-        Title.setText(address.getString("Title_item",""));
-        Description.setText(address.getString("Description_item",""));
+        Title.setText(address.getString("Title_item", ""));
+        Description.setText(address.getString("Description_item", ""));
 
-        if(address.getString("entesharat","").equals("null")){
+        if (address.getString("entesharat", "").equals("null")) {
             entesharat.setText("");
-        }else{
-            entesharat.setText(address.getString("entesharat",""));
+        } else {
+            entesharat.setText(address.getString("entesharat", ""));
         }
-        if(address.getString("nevisande","").equals("null")){
+        if (address.getString("nevisande", "").equals("null")) {
             nevisande.setText("");
-        }else{
-            nevisande.setText(address.getString("nevisande",""));
+        } else {
+            nevisande.setText(address.getString("nevisande", ""));
         }
-        if(address.getString("salechap","").equals("null")){
+        if (address.getString("salechap", "").equals("null")) {
             salechap.setText("");
-        }else{
-            salechap.setText(address.getString("salechap",""));
+        } else {
+            salechap.setText(address.getString("salechap", ""));
         }
-        if(address.getString("chap","").equals("null")){
+        if (address.getString("chap", "").equals("null")) {
             chap.setText("");
-        }else{
-            chap.setText(address.getString("chap",""));
+        } else {
+            chap.setText(address.getString("chap", ""));
         }
-        if(address.getString("chap","").equals("null")){
+        if (address.getString("chap", "").equals("null")) {
             chap.setText("");
-        }else{
-            chap.setText(address.getString("chap",""));
+        } else {
+            chap.setText(address.getString("chap", ""));
         }
-        if(address.getString("isbn","").equals("null")){
+        if (address.getString("isbn", "").equals("null")) {
             isbn.setText("");
-        }else{
-            isbn.setText(address.getString("isbn",""));
+        } else {
+            isbn.setText(address.getString("isbn", ""));
         }
 
-        if(address.getString("virayesh","").equals("null")){
+        if (address.getString("virayesh", "").equals("null")) {
             virayesh.setText("");
-        }else{
-            virayesh.setText(address.getString("virayesh",""));
+        } else {
+            virayesh.setText(address.getString("virayesh", ""));
         }
         String fee = changeNumberToFA(formatter.format(Long.valueOf(address.getString("Discount_item")))) + getString(R.string.currency);
 
@@ -284,10 +285,10 @@ public class ItemActivity extends AppCompatActivity implements ObservableScrollV
         } else {
             BadgeCounter.setVisibility(View.GONE);
         }
-        getToken token = new getToken();
-        if (!token.Ok(ItemActivity.this)) {
-            BadgeCounter.setVisibility(View.GONE);
-        }
+//        getToken token = new getToken();
+//        if (!token.Ok(ItemActivity.this)) {
+//            BadgeCounter.setVisibility(View.GONE);
+//        }
         ImageView basket_icon_bar = findViewById(R.id.basket_icon);
 
         basket_icon_bar.setOnClickListener(new View.OnClickListener() {
@@ -308,17 +309,22 @@ public class ItemActivity extends AppCompatActivity implements ObservableScrollV
             public void onClick(View v) {
                 String ID = address.getString("Id_item");
 
-                getToken token = new getToken();
-                LoginSignupAlert loginAlert = new LoginSignupAlert();
+//                getToken token = new getToken();
+//                LoginSignupAlert loginAlert = new LoginSignupAlert();
+//
+//                if (token.Ok(ItemActivity.this)) {
+//                    PlusItemBasket plusItemBasket = new PlusItemBasket();
+//                    plusItemBasket.setItem(ItemActivity.this, progressBarPlus, ID, plus, BadgeCounter);
+//                } else {
+//                    loginAlert.alertShow(ItemActivity.this, ItemActivity.class);
+//                }
+                ManagementBasket managementBasket = new ManagementBasket(ItemActivity.this);
+                managementBasket.insertProduct(ID,1);
 
-                if (token.Ok(ItemActivity.this)) {
-                    PlusItemBasket plusItemBasket = new PlusItemBasket();
-                    plusItemBasket.setItem(ItemActivity.this, progressBarPlus, ID, plus, BadgeCounter);
-                } else {
-                    loginAlert.alertShow(ItemActivity.this, ItemActivity.class);
-                }
-
-
+                SetterGetterNumberOrder setterGetter = new SetterGetterNumberOrder(ItemActivity.this);
+                setterGetter.setNumberOrder("1","+");
+                BadgeCounter.setText(setterGetter.getNumberOrder());
+                BadgeCounter.setVisibility(View.VISIBLE);
             }
 
         });

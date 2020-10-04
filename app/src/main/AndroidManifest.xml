@@ -63,6 +63,7 @@
         <activity android:name=".Activity.ResultAdvancedSearchActivity" />
         <activity android:name=".Activity.AdvancedSearchActivity" />
         <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.Login2Activity" />
         <activity android:name=".Activity.SignupActivity" />
         <activity android:name=".Activity.ForgetPassActivity" />
         <activity android:name=".Activity.SignupSenfActivity" />

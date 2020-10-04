@@ -163,10 +163,10 @@ public class BasketMiddleActivity extends AppCompatActivity {
         } else {
             BadgeCounter.setVisibility(View.GONE);
         }
-        getToken token = new getToken();
-        if (!token.Ok(getApplicationContext())) {
-            BadgeCounter.setVisibility(View.GONE);
-        }
+//        getToken token = new getToken();
+//        if (!token.Ok(getApplicationContext())) {
+//            BadgeCounter.setVisibility(View.GONE);
+//        }
 
         // set Basket icon button
         ImageView basket_icon_bar = findViewById(R.id.basket_icon);
