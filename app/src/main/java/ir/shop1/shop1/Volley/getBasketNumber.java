@@ -42,7 +42,7 @@ public class getBasketNumber {
     public void get_Items(final Context context) {
 
         final SharedPreferences sp = context.getSharedPreferences("Token", 0);
-        String urlJsonArray = context.getString(R.string.site) + "/getBasket.php";
+        String urlJsonArray = context.getString(R.string.site) + "/getBasket";
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlJsonArray,

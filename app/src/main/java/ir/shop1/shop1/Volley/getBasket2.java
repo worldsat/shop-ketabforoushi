@@ -58,6 +58,7 @@ public class getBasket2 {
 
         final SharedPreferences sp = context.getSharedPreferences("Token", 0);
         String urlJsonArray = context.getString(R.string.site) + "/api/Factor/ShowProductsInfo";
+        Log.i("moh3n", "get_Items: "+urlJsonArray);
         recyclerViewlist.setVisibility(View.INVISIBLE);
         ProgressBar.setVisibility(View.VISIBLE);
         basketFragment = new BasketFragment();
@@ -70,6 +71,7 @@ public class getBasket2 {
                     public void onResponse(String response) {
 
                         try {
+                            Log.i("moh3n", "onResponse: "+response);
                             ProgressBar.setVisibility(View.GONE);
                             if (response.equals("{\"Message\":1}")) {
 //                                emptyText.setVisibility(View.VISIBLE);
