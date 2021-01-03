@@ -97,6 +97,7 @@ public class setBasket {
                 MyData.put("TransportationFee", Bill.getString("postalFee", "0"));
                 MyData.put("Total", Bill.getString("PriceItem", "0"));
                 MyData.put("Api_token", sp.getString("token", "nothing"));
+                MyData.put("Factor_Id",Bill.getString("factor_id", "0"));
                 Log.i("moh3n", "sendParams: " + MyData);
                 return MyData;
             }

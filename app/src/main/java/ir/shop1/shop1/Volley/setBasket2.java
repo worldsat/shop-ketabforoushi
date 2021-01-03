@@ -11,11 +11,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import ir.shop1.shop1.Activity.InternetActivity;
+import ir.shop1.shop1.Domain.Payment;
 import ir.shop1.shop1.Engine.ManagementBasket;
 import ir.shop1.shop1.Engine.SnakBar;
 import ir.shop1.shop1.R;
@@ -38,6 +40,11 @@ public class setBasket2 {
                     @Override
                     public void onResponse(String response) {
                         Log.i("mohsenjamali", "onResponse: " + response);
+                        Gson gson = new Gson();
+                        Payment payment = gson.fromJson(response, Payment.class);
+                        SharedPreferences Bill = context.getSharedPreferences("Bill", 0);
+                        Bill.edit().putString("factor_id", String.valueOf(payment.getFactor().getId())).apply();
+                        Log.i("moh3n", "factorId: " + payment.getFactor().getId());
 //                        dialog.dismiss();
 
                         // ProgressBar.setVisibility(View.GONE);
