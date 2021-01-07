@@ -225,7 +225,7 @@
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/iransans"
                 android:gravity="center_vertical"
-                android:text="پرسش های متداول"
+                android:text="قوانین و شرایط استفاده"
                 android:textColor="@color/black"
                 android:textDirection="rtl" />
 

@@ -26,6 +26,7 @@ import ir.shop1.shop1.Activity.LoginActivity;
 import ir.shop1.shop1.Activity.MainActivity;
 import ir.shop1.shop1.Activity.NewsActivity;
 import ir.shop1.shop1.Activity.ProfileActivity;
+import ir.shop1.shop1.Activity.RulesActivity;
 import ir.shop1.shop1.Activity.SignupSenfActivity;
 import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
 import ir.shop1.shop1.R;
@@ -263,7 +264,8 @@ public class NavigationDrawerFragment extends Fragment {
         drawer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), RulesActivity.class);
+                startActivity(intent);
             }
         });
         drawer5.setOnClickListener(new View.OnClickListener() {

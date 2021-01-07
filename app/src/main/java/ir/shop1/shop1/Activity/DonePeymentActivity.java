@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ir.shop1.shop1.Engine.ManagementBasket;
+import ir.shop1.shop1.Engine.SetterGetterBill;
+import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
 import ir.shop1.shop1.R;
 
 public class DonePeymentActivity extends AppCompatActivity {
@@ -39,14 +42,27 @@ public class DonePeymentActivity extends AppCompatActivity {
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                emptyBAsket();
                 startActivity(new Intent(DonePeymentActivity.this, MainActivity.class));
             }
         });
     }
 
+    private void emptyBAsket() {
+        SetterGetterNumberOrder setterGetterNumberOrder = new SetterGetterNumberOrder(DonePeymentActivity.this);
+        setterGetterNumberOrder.emptyNumberOrder();
+
+        SetterGetterBill setterGetterBill = new SetterGetterBill();
+        setterGetterBill.EmptyTotalPrice(DonePeymentActivity.this);
+
+        ManagementBasket managementBasket = new ManagementBasket(DonePeymentActivity.this);
+        managementBasket.EmptyBasket();
+
+    }
+
     @Override
     public void onBackPressed() {
+        emptyBAsket();
         startActivity(new Intent(this, MainActivity.class));
     }
 

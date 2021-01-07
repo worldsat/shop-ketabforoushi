@@ -16,7 +16,7 @@ import android.widget.TextView;
 import ir.shop1.shop1.Engine.SetterGetterNumberOrder;
 import ir.shop1.shop1.R;
 
-public class AboutDesignerActivity extends AppCompatActivity {
+public class RulesActivity extends AppCompatActivity {
     private ImageView site;
     private ImageView call;
     private TextView title_toolbar;
@@ -24,7 +24,7 @@ public class AboutDesignerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_designer);
+        setContentView(R.layout.activity_rules);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         //toolbar
@@ -45,34 +45,6 @@ public class AboutDesignerActivity extends AppCompatActivity {
         Toolbar();
         Basket();
         testWebView();
-        site =  findViewById(R.id.siteb);
-        call = findViewById(R.id.call);
-        site.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String url = "telegram.me/atrincom";
-
-                if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                    url = "http://" + url;
-                }
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-
-            }
-        });
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent telling = new Intent(Intent.ACTION_DIAL);
-                telling.setData(Uri.parse("tel:09136569769"));
-                AboutDesignerActivity.this.startActivity(telling);
-            }
-
-        });
 
 
 
@@ -80,10 +52,10 @@ public class AboutDesignerActivity extends AppCompatActivity {
 
     private void testWebView() {
         ViewGroup book2;
-        book2 = findViewById(R.id.textView22);
+        book2 = findViewById(R.id.linearLayout7);
         final WebView webView = new WebView(this);
         book2.addView(webView);
-        webView.loadUrl("file:///android_asset/about.html");
+        webView.loadUrl("file:///android_asset/rules.html");
         webView.setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {
@@ -99,8 +71,8 @@ public class AboutDesignerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        Intent intent = new Intent(AboutDesignerActivity.this, MainActivity.class);
-        AboutDesignerActivity.this.startActivity(intent);
+        Intent intent = new Intent(RulesActivity.this, MainActivity.class);
+        RulesActivity.this.startActivity(intent);
 
     }
     private void Toolbar() {
@@ -110,7 +82,7 @@ public class AboutDesignerActivity extends AppCompatActivity {
         // RelativeLayout BasketLayout=findViewById(R.id.BasketLayout);
         //  BasketLayout.setVisibility(View.GONE);
         TextView titleActionBar = findViewById(R.id.TitleActionBar);
-        titleActionBar.setText("درباره طراح برنامه");
+        titleActionBar.setText("قوانین و شرایط استفاده");
         LinearLayout backIcon = findViewById(R.id.backButton);
         backIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +100,7 @@ public class AboutDesignerActivity extends AppCompatActivity {
         //set badgetNumber
         TextView BadgeCounter = findViewById(R.id.badgeCounter);
 
-        SetterGetterNumberOrder setterGetter = new SetterGetterNumberOrder(AboutDesignerActivity.this);
+        SetterGetterNumberOrder setterGetter = new SetterGetterNumberOrder(RulesActivity.this);
         BadgeCounter.setText(setterGetter.getNumberOrder());
 
         int badget_number = Integer.valueOf(setterGetter.getNumberOrder());

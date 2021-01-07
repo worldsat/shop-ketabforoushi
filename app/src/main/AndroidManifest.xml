@@ -73,6 +73,8 @@
         <activity android:name=".Activity.NewsFullActivity" />
         <activity android:name=".Activity.AboutUsActivity" />
         <activity android:name=".Activity.ContactUsActivity" />
+        <activity android:name=".Activity.RulesActivity" />
+        <activity android:name=".Activity.BasketMiddleActivity2" />
         <activity android:name=".Activity.InternetActivity" />
         <activity android:name=".Activity.WellcomeActivity">
             <intent-filter>

@@ -20,7 +20,10 @@ public class ManagementBasket {
         idList = tinyDB.getListString("IdList");
         countList = tinyDB.getListString("countList");
     }
-
+public  void EmptyBasket(){
+    tinyDB.getListString("IdList").clear();
+    tinyDB.getListString("countList").clear();
+}
     public ArrayList<String> getProducts() {
         idList = tinyDB.getListString("IdList");
         return idList;
