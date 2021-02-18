@@ -20,10 +20,12 @@ public class ManagementBasket {
         idList = tinyDB.getListString("IdList");
         countList = tinyDB.getListString("countList");
     }
-public  void EmptyBasket(){
-    tinyDB.getListString("IdList").clear();
-    tinyDB.getListString("countList").clear();
-}
+
+    public void EmptyBasket() {
+        tinyDB.getListString("IdList").clear();
+        tinyDB.getListString("countList").clear();
+    }
+
     public ArrayList<String> getProducts() {
         idList = tinyDB.getListString("IdList");
         return idList;
@@ -90,12 +92,15 @@ public  void EmptyBasket(){
     public Map<String, String> getListBasketItems() {
         idList = tinyDB.getListString("IdList");
         countList = tinyDB.getListString("countList");
-        Map<String, String> params=new HashMap<>();
-
+        Map<String, String> params = new HashMap<>();
+      ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < idList.size(); i++) {
 
-            params.put("FactorDetails",idList.get(i)+"."+countList.get(i));
+            list.add(idList.get(i) + "." + countList.get(i));
+
         }
+        params.put("FactorDetails", list.toString().replace("]", "").replace("[", "").replace(" ",""));
+        Log.i("moh3n", "getListBasketItems: " + params);
         return params;
     }
 }
